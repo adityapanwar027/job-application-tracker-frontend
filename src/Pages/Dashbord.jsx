@@ -1,5 +1,5 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { createJob, getJobs } from "../Services/authService";
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
 
@@ -8,6 +8,24 @@ function Dashboard() {
     position: "",
   });
 
+ useEffect(() => {
+  const fetchJobs = async () => {
+    try {
+      const data = await getJobs();
+    console.log(data);
+    setJobs(data.jobs);
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
+  fetchJobs();
+}, []);
+
+ 
+
+
+  // handlechange
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -15,8 +33,14 @@ function Dashboard() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // handlesubmit
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const data = await createJob(formData);
+
+    console.log(data);
 
     setJobs([
       ...jobs,
@@ -30,7 +54,12 @@ function Dashboard() {
       company: "",
       position: "",
     });
-  };
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
+
+
 
   return (
     <div>
