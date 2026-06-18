@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createJob, getJobs } from "../Services/authService";
+import { createJob, getJobs, deleteJob } from "../Services/authService";
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
 
@@ -12,7 +12,7 @@ function Dashboard() {
   const fetchJobs = async () => {
     try {
       const data = await getJobs();
-    console.log(data);
+    console.log(data.jobs);
     setJobs(data.jobs);
     } catch (error) {
       console.log(error.response?.data);
@@ -59,7 +59,16 @@ function Dashboard() {
   }
 };
 
+// handleDelete
+const handleDelete = async (id) => {
+  try {
+    await deleteJob(id);
 
+    setJobs(jobs.filter((job) => job._id !== id));
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
   return (
     <div>
@@ -97,6 +106,16 @@ function Dashboard() {
           <div key={index}>
             <h3>{job.company}</h3>
             <p>{job.position}</p>
+
+            <button
+  onClick={() => {
+    console.log(job);
+    handleDelete(job._id);
+  }}
+>
+  Delete
+</button>
+
           </div>
         ))
       )}

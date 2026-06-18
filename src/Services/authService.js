@@ -49,3 +49,19 @@ export const getJobs = async () => {
 
   return response.data;
 };
+
+// delete job
+export const deleteJob = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.delete(
+    `http://localhost:5000/api/jobs/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
