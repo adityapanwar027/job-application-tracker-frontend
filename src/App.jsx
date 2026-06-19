@@ -1,7 +1,10 @@
+import Login from "./Pages/Login";
 import Dashbord from "./Pages/Dashbord";
 
 function App() {
-  return <Dashbord />;
+  const token = localStorage.getItem("token");
+
+  return token ? <Dashbord /> : <Login />;
 }
 
 export default App;
