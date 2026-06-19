@@ -93,6 +93,21 @@ const handleUpdate = async () => {
     const data = await updateJob(editId, formData);
 
     console.log(data);
+
+    const updatedJobs = jobs.map((job) =>
+      job._id === editId
+        ? { ...job, company: formData.company, position: formData.position }
+        : job
+    );
+
+    setJobs(updatedJobs);
+
+    setFormData({
+      company: "",
+      position: "",
+    });
+
+    setEditId(null);
   } catch (error) {
     console.log(error.response?.data);
   }
