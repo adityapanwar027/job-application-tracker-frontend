@@ -113,14 +113,17 @@ const handleUpdate = async () => {
   }
 };
 
-
+// handle logout
+const handleLogout = () =>{
+  localStorage.removeItem("token");
+};
 
   return (
     <div>
       <h1>Dashboard</h1>
 
       <button>Add Job</button>
-      <button>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
 
       <form onSubmit={handleSubmit}>
         <input
