@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createJob, getJobs, deleteJob } from "../Services/authService";
+import { createJob, getJobs, deleteJob, updateJob } from "../Services/authService";
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
 
@@ -39,6 +39,12 @@ function Dashboard() {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
+  console.log("edited", editId)
+
+  if (editId) {
+    return handleUpdate();
+  }
+
   try {
     const data = await createJob(formData);
 
@@ -72,6 +78,7 @@ const handleDelete = async (id) => {
   }
 };
 
+// handleEdit
 const handleEdit = async (job) => {
   setFormData({
     company: job.company,
@@ -79,6 +86,19 @@ const handleEdit = async (job) => {
   });
   setEditId(job._id);
 }
+
+// handleupdate
+const handleUpdate = async () => {
+  try {
+    const data = await updateJob(editId, formData);
+
+    console.log(data);
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
+
+
 
   return (
     <div>
