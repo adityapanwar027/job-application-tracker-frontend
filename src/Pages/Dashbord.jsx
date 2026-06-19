@@ -8,6 +8,8 @@ function Dashboard() {
     position: "",
   });
 
+  const [editId, setEditId] = useState(null);
+
  useEffect(() => {
   const fetchJobs = async () => {
     try {
@@ -70,6 +72,14 @@ const handleDelete = async (id) => {
   }
 };
 
+const handleEdit = async (job) => {
+  setFormData({
+    company: job.company,
+    position:job.position,
+  });
+  setEditId(job._id);
+}
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -107,12 +117,11 @@ const handleDelete = async (id) => {
             <h3>{job.company}</h3>
             <p>{job.position}</p>
 
-            <button
-  onClick={() => {
-    console.log(job);
-    handleDelete(job._id);
-  }}
->
+<button onClick={() => handleEdit(job)}>
+  Edit
+</button>
+
+<button onClick={() => handleDelete(job._id)}>
   Delete
 </button>
 
