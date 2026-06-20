@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = "https://job-application-tracker-exs2.onrender.com/api/auth";
 
 // register user
 export const registerUser = async (userData) => {
@@ -21,7 +21,7 @@ export const createJob = async (jobData) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.post(
-    "http://localhost:5000/api/jobs",
+    "https://job-application-tracker-exs2.onrender.com/api/jobs",
     jobData,
     {
       headers: {
@@ -39,7 +39,7 @@ export const getJobs = async () => {
   const token = localStorage.getItem("token");
 
   const response = await axios.get(
-    "http://localhost:5000/api/jobs",
+    "https://job-application-tracker-exs2.onrender.com/api/jobs",
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ export const deleteJob = async (id) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.delete(
-    `http://localhost:5000/api/jobs/${id}`,
+    `https://job-application-tracker-exs2.onrender.com/api/jobs${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ export const deleteJob = async (id) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.put(
-    `http://localhost:5000/api/jobs/${id}`,
+    `https://job-application-tracker-exs2.onrender.com/api/jobs${id}`,
     jobData,
     {
       headers: {
