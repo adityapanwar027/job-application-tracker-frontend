@@ -16,6 +16,7 @@ function Dashboard() {
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
 
   useEffect(() => {
@@ -42,43 +43,45 @@ function Dashboard() {
 
   // handlesubmit
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
 
-    console.log("edited", editId);
+  setError("");
+  setSuccess("");
 
-    if (editId) {
-      return handleUpdate();
-    }
+  console.log("editId:", editId);
 
-    try {
-      setLoading(true);
-      setLoading(false);
-      setFormData({
-        company: "",
-        position: "",
-      });
-      const data = await createJob(formData);
+  if (editId) {
+    return handleUpdate();
+  }
 
-      console.log(data);
+  try {
+    setLoading(true);
 
-      setJobs([
-        ...jobs,
-        {
-          company: formData.company,
-          position: formData.position,
-        },
-      ]);
+    const data = await createJob(formData);
 
-      setFormData({
-        company: "",
-        position: "",
-      });
-    } catch (error) {
-     setError(error.response?.data?.message || "Something went wrong");
-    }
-  };
+    console.log(data);
 
+    setJobs([
+      ...jobs,
+      {
+        company: formData.company,
+        position: formData.position,
+      },
+    ]);
+
+    setFormData({
+      company: "",
+      position: "",
+    });
+
+    setSuccess("Job added successfully");
+
+    setLoading(false);
+  } catch (error) {
+    setError(error.response?.data?.message || "Something went wrong");
+    setLoading(false);
+  }
+};
   // handleDelete
   const handleDelete = async (id) => {
     try {
@@ -157,6 +160,7 @@ function Dashboard() {
         <button type="submit">{loading ? "Loading..." : "Save Job"}</button>
       </form>
       {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
 
       <h2>My Jobs</h2>
 
