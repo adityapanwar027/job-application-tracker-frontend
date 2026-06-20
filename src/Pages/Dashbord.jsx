@@ -14,8 +14,9 @@ function Dashboard() {
   });
 
   const [editId, setEditId] = useState(null);
-
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -42,6 +43,7 @@ function Dashboard() {
   // handlesubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     console.log("edited", editId);
 
@@ -73,7 +75,7 @@ function Dashboard() {
         position: "",
       });
     } catch (error) {
-      console.log(error.response?.data);
+     setError(error.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -154,6 +156,7 @@ function Dashboard() {
 
         <button type="submit">{loading ? "Loading..." : "Save Job"}</button>
       </form>
+      {error && <p>{error}</p>}
 
       <h2>My Jobs</h2>
 
