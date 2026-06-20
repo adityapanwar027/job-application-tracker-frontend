@@ -55,7 +55,7 @@ export const deleteJob = async (id) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.delete(
-    `https://job-application-tracker-exs2.onrender.com/api/jobs${id}`,
+    `https://job-application-tracker-exs2.onrender.com/api/jobs/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
