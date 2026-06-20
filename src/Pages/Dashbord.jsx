@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { createJob, getJobs, deleteJob, updateJob } from "../Services/authService";
+import {
+  createJob,
+  getJobs,
+  deleteJob,
+  updateJob,
+} from "../Services/authService";
 function Dashboard() {
   const [jobs, setJobs] = useState([]);
 
@@ -10,22 +15,21 @@ function Dashboard() {
 
   const [editId, setEditId] = useState(null);
 
- useEffect(() => {
-  const fetchJobs = async () => {
-    try {
-      const data = await getJobs();
-    console.log(data.jobs);
-    setJobs(data.jobs);
-    } catch (error) {
-      console.log(error.response?.data);
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
-  fetchJobs();
-}, []);
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const data = await getJobs();
+        console.log(data.jobs);
+        setJobs(data.jobs);
+      } catch (error) {
+        console.log(error.response?.data);
+      }
+    };
 
- 
-
+    fetchJobs();
+  }, []);
 
   // handlechange
   const handleChange = (e) => {
@@ -37,86 +41,92 @@ function Dashboard() {
 
   // handlesubmit
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  console.log("edited", editId)
+    console.log("edited", editId);
 
-  if (editId) {
-    return handleUpdate();
-  }
+    if (editId) {
+      return handleUpdate();
+    }
 
-  try {
-    const data = await createJob(formData);
+    try {
+      setLoading(true);
+      setLoading(false);
+      setFormData({
+        company: "",
+        position: "",
+      });
+      const data = await createJob(formData);
 
-    console.log(data);
+      console.log(data);
 
-    setJobs([
-      ...jobs,
-      {
-        company: formData.company,
-        position: formData.position,
-      },
-    ]);
+      setJobs([
+        ...jobs,
+        {
+          company: formData.company,
+          position: formData.position,
+        },
+      ]);
 
+      setFormData({
+        company: "",
+        position: "",
+      });
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
+  // handleDelete
+  const handleDelete = async (id) => {
+    try {
+      await deleteJob(id);
+
+      setJobs(jobs.filter((job) => job._id !== id));
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
+  // handleEdit
+  const handleEdit = async (job) => {
     setFormData({
-      company: "",
-      position: "",
+      company: job.company,
+      position: job.position,
     });
-  } catch (error) {
-    console.log(error.response?.data);
-  }
-};
+    setEditId(job._id);
+  };
 
-// handleDelete
-const handleDelete = async (id) => {
-  try {
-    await deleteJob(id);
+  // handleupdate
+  const handleUpdate = async () => {
+    try {
+      const data = await updateJob(editId, formData);
 
-    setJobs(jobs.filter((job) => job._id !== id));
-  } catch (error) {
-    console.log(error.response?.data);
-  }
-};
+      console.log(data);
 
-// handleEdit
-const handleEdit = async (job) => {
-  setFormData({
-    company: job.company,
-    position:job.position,
-  });
-  setEditId(job._id);
-}
+      const updatedJobs = jobs.map((job) =>
+        job._id === editId
+          ? { ...job, company: formData.company, position: formData.position }
+          : job,
+      );
 
-// handleupdate
-const handleUpdate = async () => {
-  try {
-    const data = await updateJob(editId, formData);
+      setJobs(updatedJobs);
 
-    console.log(data);
+      setFormData({
+        company: "",
+        position: "",
+      });
 
-    const updatedJobs = jobs.map((job) =>
-      job._id === editId
-        ? { ...job, company: formData.company, position: formData.position }
-        : job
-    );
+      setEditId(null);
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
 
-    setJobs(updatedJobs);
-
-    setFormData({
-      company: "",
-      position: "",
-    });
-
-    setEditId(null);
-  } catch (error) {
-    console.log(error.response?.data);
-  }
-};
-
-// handle logout
-const handleLogout = () =>{
-  localStorage.removeItem("token");
-};
+  // handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+  };
 
   return (
     <div>
@@ -142,7 +152,7 @@ const handleLogout = () =>{
           onChange={handleChange}
         />
 
-        <button type="submit">Save Job</button>
+        <button type="submit">{loading ? "Loading..." : "Save Job"}</button>
       </form>
 
       <h2>My Jobs</h2>
@@ -155,14 +165,9 @@ const handleLogout = () =>{
             <h3>{job.company}</h3>
             <p>{job.position}</p>
 
-<button onClick={() => handleEdit(job)}>
-  Edit
-</button>
+            <button onClick={() => handleEdit(job)}>Edit</button>
 
-<button onClick={() => handleDelete(job._id)}>
-  Delete
-</button>
-
+            <button onClick={() => handleDelete(job._id)}>Delete</button>
           </div>
         ))
       )}
