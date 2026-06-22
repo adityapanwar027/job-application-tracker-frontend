@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import "./Dashbord.css";
 import {
   createJob,
   getJobs,
   deleteJob,
   updateJob,
 } from "../Services/authService";
-function Dashboard() {
+function Dashbord() {
   const [jobs, setJobs] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -17,7 +18,6 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -43,45 +43,39 @@ function Dashboard() {
 
   // handlesubmit
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  setError("");
-  setSuccess("");
+    setError("");
+    setSuccess("");
 
-  console.log("editId:", editId);
+    console.log("editId:", editId);
 
-  if (editId) {
-    return handleUpdate();
-  }
+    if (editId) {
+      return handleUpdate();
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const data = await createJob(formData);
+      const data = await createJob(formData);
 
-    console.log(data);
+      console.log(data);
 
-    setJobs([
-      ...jobs,
-      {
-        company: formData.company,
-        position: formData.position,
-      },
-    ]);
+      setJobs([...jobs, data]);
 
-    setFormData({
-      company: "",
-      position: "",
-    });
+      setFormData({
+        company: "",
+        position: "",
+      });
 
-    setSuccess("Job added successfully");
+      setSuccess("Job added successfully");
 
-    setLoading(false);
-  } catch (error) {
-    setError(error.response?.data?.message || "Something went wrong");
-    setLoading(false);
-  }
-};
+      setLoading(false);
+    } catch (error) {
+      setError(error.response?.data?.message || "Something went wrong");
+      setLoading(false);
+    }
+  };
   // handleDelete
   const handleDelete = async (id) => {
     try {
@@ -134,13 +128,15 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="dashbord-container">
+      <h1 className="dashboard-title">Job Application Tracker</h1>
 
-      <button>Add Job</button>
-      <button onClick={handleLogout}>Logout</button>
+      <button className="btn-add">Add Job</button>
+<button className="btn-logout" onClick={handleLogout}>
+  Logout
+</button>
 
-      <form onSubmit={handleSubmit}>
+      <form className="job-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="company"
@@ -168,13 +164,24 @@ function Dashboard() {
         <p>No jobs added yet</p>
       ) : (
         jobs.map((job, index) => (
-          <div key={index}>
-            <h3>{job.company}</h3>
-            <p>{job.position}</p>
+          <div key={job._id} className="job-card">
+            <div>
+              <h3>{job.company}</h3>
+              <p>{job.position}</p>
+            </div>
 
-            <button onClick={() => handleEdit(job)}>Edit</button>
+            <div>
+              <button className="btn-edit" onClick={() => handleEdit(job)}>
+                Edit
+              </button>
 
-            <button onClick={() => handleDelete(job._id)}>Delete</button>
+              <button
+                className="btn-delete"
+                onClick={() => handleDelete(job._id)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))
       )}
@@ -182,4 +189,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Dashbord;

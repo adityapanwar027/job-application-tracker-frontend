@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { loginUser } from "../Services/authService";
+import "./Login.css"
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -33,8 +34,8 @@ localStorage.setItem("user", JSON.stringify(data));
 
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="auth-container">
+      <h1 className="auth-title">Welcome Back</h1>
 
       <form onSubmit={handleSubmmit}>
         <input

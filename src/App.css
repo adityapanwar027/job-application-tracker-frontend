@@ -1,0 +1,21 @@
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.switch-auth-btn {
+  width: 400px;
+  padding: 12px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #1e293b;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.switch-auth-btn:hover {
+  background: #cbd5e1;
+}

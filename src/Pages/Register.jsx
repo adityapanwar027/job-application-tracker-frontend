@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../Services/authService";
+import "./Register.css";
 
 function Register() {
   const [formDate, setformDate] = useState({
@@ -27,8 +28,8 @@ function Register() {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+   <div className="auth-container">
+      <h1 className="auth-title">Create Account</h1>
 
       <form onSubmit={handleSubmmit}>
         <input

@@ -1,0 +1,141 @@
+.dashbord-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+ background: #e0ecff;
+  border-radius: 12px;
+}
+
+.job-card {
+  border: 1px solid #ddddddcd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit {
+  background: orange;
+  border: none;
+  padding: 8px 12px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.job-form {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.job-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  flex: 1;
+}
+
+.job-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 30px;
+}
+
+.job-card h3 {
+  margin-bottom: 5px;
+}
+
+.job-card p {
+  color: #0f0e0e;
+}
+
+.job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.job-card {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.job-card > div:last-child {
+  display: flex;
+  gap: 10px;
+}
+
+.dashbord-container > button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-add,
+.btn-logout {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-add {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-logout {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-add:hover,
+.btn-logout:hover,
+.btn-edit:hover,
+.btn-delete:hover,
+.job-form button:hover {
+  opacity: 0.9;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  transition: 0.2s ease;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #1e293b;
+}
+
+.job-form {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}

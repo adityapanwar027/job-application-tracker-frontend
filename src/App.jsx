@@ -2,6 +2,7 @@ import { useState } from "react";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashbord from "./Pages/Dashbord";
+import "./App.css";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -12,12 +13,13 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="auth-wrapper">
       {showRegister ? <Register /> : <Login />}
 
-      <br />
-
-      <button onClick={() => setShowRegister(!showRegister)}>
+      <button
+        className="switch-auth-btn"
+        onClick={() => setShowRegister(!showRegister)}
+      >
         {showRegister ? "Go to Login" : "Go to Register"}
       </button>
     </div>
